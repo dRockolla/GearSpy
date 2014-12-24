@@ -1,0 +1,69 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="gearGeekApp">
+<head>
+  <meta charset="utf-8">
+  <title>Gear Spy</title>
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/angular/angular.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>
+</head>
+
+<body>
+
+<div class="entry-content" ng-controller="ActivityListCtrl">
+
+
+<div class="ride-list">
+	<div class="error">Unable to connect to Strava.</div>
+	<div class='ride' ng-repeat="activity in activities" ng-cloak ng-click="clickit(activity.id, activity.name)">
+	<h3>{{activity.name}}</h3>
+	<img class="summary-map" src="//maps.googleapis.com/maps/api/staticmap?size=100x100&amp;path=weight:3%7Ccolor:red%7Cenc:{{activity.map.summary_polyline}}" alt="{{activity.name}}">
+		<ul>
+			<li>{{activity.distance}}</li>
+			<li>{{activity.total_elevation_gain}}</li>
+			<li>{{activity.average_cadence}} rpm</li>
+		</ul>
+	</div>
+</ul>
+</div>
+
+<div class="ride-info">
+<h2>{{athlete.firstname}} {{athlete.lastname}}</h2>
+<img ng-src="{{athlete.profile}}">
+
+<form name="setgears">
+<label for="chainrings">Chainrings</label>
+<input type="text"
+	name="chainrings" 
+	ng-model="chainrings" 
+	required=""
+	/>
+	
+<span class="error" ng-show="setgears.chainrings.$error.required">I gotta know your chainrings.</span>
+<span class="error" ng-show="setgears.chainrings.$error.pattern">Please enter a space separated list of the number of teeth each chainring.</span>
+
+<label for="cogs">Cogs</label>
+<input type="text" 
+	name="cogs" 
+	ng-model="cassette" 
+	required=""
+	/>
+	
+<span class="error" ng-show="setgears.cogs.$error.required">I gotta know what cogs you have on your cassette.</span>
+<span class="error" ng-show="setgears.cogs.$error.pattern">Please enter a space separated list of the number of teeth each cog.</span>
+
+</form>
+
+
+<h1 ng-cloak>{{title}}</h1>
+<p> sort by: <select id="sort" ng-cloak ng-model="mySort" ng-options="o.text for o in options" ng-change="selectSort()"></select></p>
+<div id="grgk-canvas"></div>
+<div id="tooltip" class="hidden"><p id="value"></p></div>
+</div>
+
+</div>
+
+</body>
+</html>

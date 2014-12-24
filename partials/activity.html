@@ -1,0 +1,65 @@
+<div class="col-md-8 col-md-offset-2 ride-info"  ng-controller="GearCtrl">
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#/activities/">Activities</a></li>
+  <li class="active">{{activity.name}}</li>
+</ol>
+	<div class="gs-section">
+		<h2 ng-cloak>{{activity.name}}</h2>
+		<img class="map" src="//maps.googleapis.com/maps/api/staticmap?size=640x200&amp;path=weight:3%7Ccolor:red%7Cenc:{{activity.map.summary_polyline}}" alt="{{activity.name}}" />
+	</div>
+	<div class="gs-section">
+	<h3>Gears</h3>
+		<div class="form-group">
+	
+			<div class="btn-group" ng-show="false">
+				<label class="btn btn-primary" ng-model="wheel" btn-radio="700">700c</label>
+				<label class="btn btn-primary" ng-model="wheel" btn-radio="650">650c</label>	
+			</div>
+			<div class="btn-group">
+				<label class="btn btn-info" ng-model="spd" btn-radio="10">10 Speed</label>
+				<label class="btn btn-info" ng-model="spd" btn-radio="11">11 Speed</label>	
+			</div>
+			<div class="btn-spy">
+				<button class="btn btn-success" ng-click="spy(activity.id)">Spy</button>
+				<button class="btn btn-danger" ng-click="spyharder(activity.id)" ng-show="false">Spy Again, but try harder this time</button>
+			</div>
+			
+			<form name="setgears" class="form-inline" ng-show="chainrings">
+			<div class="alert alert-success">GearSpy's guess</div>
+					<label for="chainrings">Chainrings</label>
+					<input class="form-control" type="text"
+						name="chainrings" 
+						ng-model="chainrings" 
+						required=""
+						ng-disabled="!manual" />
+					<label for="cogs">Cogs</label>
+					<input class="form-control" type="text" 
+						name="cogs" 
+						ng-model="cassette" 
+						required=""
+						ng-disabled="!manual" />
+					<input class="form-control" type="checkbox" ng-model="manual">
+					<label for="manual">Set Manually</label>
+					<!-- span class="help-block error" >You can enter the cogs on your cassette, but let me try to guess first.</span -->
+					<!-- span class="help-block error" ng-show="setgears.cogs.$dirty && setgears.cogs.$error.pattern">Please enter a space separated list of the number of teeth each cog.</span -->
+			</form>
+		</div>
+	</div>
+	<div id="sectionScatter" class="gs-section" ng-show="chainrings">
+		<h3>Cadence vs Speed</h3>
+		<div id="scatter" class="canvas"></div>
+		<div id="tooltip" class="hidden"><p id="value"></p></div>
+	</div>
+	<div id="sectionElevation" class="gs-section" ng-show="chainrings">
+		<h3>Gears in Profile</h3>
+		<div id="elevationPlot" class="canvas"></div>
+	</div>
+	<div class="gs-section" ng-show="chainrings">
+		<h3>Gear Use</h3>
+		<div class="use-chart">
+			<p> sort by: <select id="sort" ng-cloak ng-model="mySort" ng-options="o.text for o in options" ng-change="selectSort()"></select></p>
+			<div id="barChart" class="canvas"></div>
+		</div>
+	</div>
+</div>

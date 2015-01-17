@@ -587,10 +587,10 @@ gearSpyServices.factory('GearSpy', ['d3Service', function(d3Service) {
 				})
 				.attr('y1', this.h)
 				.transition()
-				.delay(function(d, i) {
-					return i * 40;
-				})
-				.duration(500)
+				//.delay(function(d, i) {
+				//	return i * 40;
+				//})
+				//.duration(500)
 				.attr('x2', function(d) {
 					return xScale(d.distance);
 				})

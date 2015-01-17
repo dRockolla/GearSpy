@@ -1,8 +1,9 @@
 'use strict'
 
 var gearSpyApp = angular.module("gearSpyApp", [
+	"gearSpyDirectives",
 	"gearSpyServices",
-	"gearSpyControllers",
+	"GearSpyControllers",
 	"ngRoute",
 	"ui.bootstrap"
 ]);

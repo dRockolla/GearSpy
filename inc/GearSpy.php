@@ -32,7 +32,6 @@ if ( isset($_GET['action']) ) {
 			break;
 		case "initui":
 			echo initUi($strava, $accessToken);
-
 			die();
 			break;
 		case "connect":
@@ -46,7 +45,15 @@ if ( isset($_GET['action']) ) {
 			die();
 			break;
 		case "spy":
-			$data = json_decode(file_get_contents("php://input"));
+			//$data = json_decode(file_get_contents("php://input"));
+			error_log("GOT ID? " . $_GET['id']);
+			$data = array(
+				'id'			=>	$_GET['id'],
+				'wheel'			=>	$_GET['wheel'],
+				'speed'			=>	$_GET['speed'],
+				'chainrings'	=>  $_GET['chainrings'],
+				'cassette'		=>	$_GET['cassette']
+			);
 			echo spy($data, $strava, $accessToken);
 			die();
 			break;
@@ -141,7 +148,8 @@ function loadride($id, $strava, $accessToken) {
 }
 
 function spy($data, $strava, $accessToken) {
-	$activity_stream = $strava->get( 'activities/' . $data->id . '/streams/velocity_smooth,cadence,time,altitude/', $accessToken );
+	error_log("data is here: " . json_encode($data));
+	$activity_stream = $strava->get( 'activities/' . $data['id'] . '/streams/velocity_smooth,cadence,time,altitude/', $accessToken );
 	$types = array();
 	if ( empty($activity_stream) ) {
 		error_log("Activity stream not returned");
@@ -187,7 +195,7 @@ function load_activity($id, $strava, $accessToken) {
 }
 
 function process_activity_stream( $activity_stream, $types, $users_data) {
-	//error_log(json_encode($users_data));
+	error_log("in process_actiity_stream(): " . $users_data['speed'] );
 	$timer_start = microtime(true);
 	$data_points = array();
 	$id = 0;
@@ -197,7 +205,7 @@ function process_activity_stream( $activity_stream, $types, $users_data) {
 	$rough_ratios = array();
 	$gps_points = array();
 	
-	Drive_Train::$speed = $users_data->speed;
+	Drive_Train::$speed = $users_data['speed'];
 
 	//$file = fopen("speed_vs_cadence.csv","w");
 
@@ -236,8 +244,8 @@ function process_activity_stream( $activity_stream, $types, $users_data) {
 		}
 
 		$dt = null;
-		if (isset($users_data->chainrings) && isset($users_data->cassette)) {
-			$dt = new Drive_Train(preg_split("/[\s,]/", $users_data->chainrings), preg_split("/[\s,]/", $users_data->cassette));
+		if (isset($users_data['chainrings']) && isset($users_data['cassette'])) {
+			$dt = new Drive_Train(preg_split("/[\s,]/", $users_data['chainrings']), preg_split("/[\s,]/", $users_data['cassette']));
 		} else {
 			$dt = Drive_Train::detect($gps_points);
 		}

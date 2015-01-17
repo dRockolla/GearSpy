@@ -1,11 +1,11 @@
 'use strict'
 
-var gearSpyControllers = angular.module('gearSpyControllers', [])
+var GearSpyControllers = angular.module('GearSpyControllers', [])
 	.run(['$anchorScroll', function($anchorScroll) {
 		$anchorScroll.yOffset = 50;
 }]);
 
-gearSpyControllers.controller('ActivityListCtrl', ['$scope', 'ActivityList', '$location', function($scope, ActivityList, $location) {
+GearSpyControllers.controller('ActivityListCtrl', ['$scope', 'ActivityList', '$location', function($scope, ActivityList, $location) {
 		
 	if (!$scope.activities) {
 		ActivityList.get( function(data) {
@@ -22,7 +22,7 @@ gearSpyControllers.controller('ActivityListCtrl', ['$scope', 'ActivityList', '$l
 	}
 }]);
 
-gearSpyControllers.controller('ActivityCtrl', ['$scope', '$location', 'Activity', function($scope, $location, Activity) {
+GearSpyControllers.controller('ActivityCtrl', ['$scope', '$location', 'Activity', function($scope, $location, Activity) {
 	Activity.get(function(data) {
 		$scope.activityLoaded = true;
 		$scope.activity = data.activity;
@@ -34,12 +34,11 @@ gearSpyControllers.controller('ActivityCtrl', ['$scope', '$location', 'Activity'
 		Activity.get(function(data) {
 			$scope.activityLoaded = true;
 			$scope.activity = data.activity;
-
 		});
 	}
 }]);
 
-gearSpyControllers.controller('UserCtrl', ['$scope', 'User', "$http", "$rootScope", "$location", function($scope, User, $http, $rootScope, $location) {
+GearSpyControllers.controller('UserCtrl', ['$scope', 'User', "$http", "$rootScope", "$location", function($scope, User, $http, $rootScope, $location) {
 	if ($rootScope.athlete === undefined) {
 			User.get(function(data) {
 				$rootScope.athlete = data.athlete;
@@ -57,9 +56,10 @@ gearSpyControllers.controller('UserCtrl', ['$scope', 'User', "$http", "$rootScop
 	}
 }]);
 
-gearSpyControllers.controller('GearCtrl', ['$scope', '$http', 'GearSpy', function($scope, $http, GearSpy) {
+GearSpyControllers.controller('GearCtrl', ['$scope', '$http', 'GearSpy', function($scope, $http, GearSpy) {
 	$scope.wheel = 700;
 	$scope.spd = 10;
+	$scope.points = null;
 	$scope.options = [
 		{"text": "ratio", "value": "ratio"},
 		{"text": "Percent Used", "value": "percent"},
@@ -73,25 +73,18 @@ gearSpyControllers.controller('GearCtrl', ['$scope', '$http', 'GearSpy', functio
 	};
 	
 	$scope.spy = function(id) {
-		var params = {
-				action: "spy",
-				id: id,
-				wheel: $scope.wheel,
-				speed: $scope.spd,
-				chainrings: $scope.chainrings,
-				cassette: $scope.cassette
-		}
-		$http.post("inc/GearSpy.php?action=spy", params).success(function(data) {
+		GearSpy.spy(id, $scope.wheel, $scope.spd, $scope.chainrings, $scope.cassette).success(function(data) {
 			$scope.showGearForm = true;
 			GearSpy.sort = $scope.mySort;
 			GearSpy.dataset = data;
 			$scope.chainrings = data.chainrings.toString();
 			$scope.cassette = data.cassette.toString();
-			GearSpy.plotSpdCadnc(data.points);
+			$scope.points = data.points;
+			//GearSpy.plotSpdCadnc(data.points);
 			GearSpy.plotGearPie(data.gears);
-			GearSpy.plotClimbing(data.points)
+			GearSpy.plotClimbing(data.points);
 		});
-	};
+	}
 	
 	$scope.spyharder = function(id) {
 		var params = {
@@ -119,12 +112,12 @@ gearSpyControllers.controller('GearCtrl', ['$scope', '$http', 'GearSpy', functio
 	//$scope.cassette = "12 13 14 15 16 17 19 21 24 27";
 }]);
 
-gearSpyControllers.controller('HomeCtrl', ['$scope', '$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
+GearSpyControllers.controller('HomeCtrl', ['$scope', '$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
 	//angular.element(document).ready(function() {
 		var q = (window.location.search) ? window.location.search + "&" : "?";
 		$http.get("inc/GearSpy.php" + q + "action=auth").success(function(data) {
 			if (data.status == 200) {
-				if (window.location.search.match("code=")) window.location = "/"
+				if (window.location.search.match("code=")) window.location = "/GearSpy/"
 				$rootScope.auth = true;
 				$rootScope.athlete = data.athlete;
 			} else {

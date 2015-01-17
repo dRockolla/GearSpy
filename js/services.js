@@ -50,7 +50,6 @@ gearSpyServices.factory('User', ['$http', function($http) {
 	}
 }]);
 
-
 gearSpyServices.factory('ActivityList', ['$http', function($http) {
 	return {
 		activities: null,
@@ -65,8 +64,22 @@ gearSpyServices.factory('ActivityList', ['$http', function($http) {
 	}
 }]);
 
-gearSpyServices.factory('GearSpy', ['d3Service', function(d3Service) {
+gearSpyServices.factory('GearSpy', ['$http', 'd3Service', function($http, d3Service) {
 	return {
+		spy: function(id, wheel, spd, chainrings, cassette) {
+			var url = 'inc/GearSpy.php?action=spy';
+			return $http.get(url, {
+				params: {
+					action: "spy",
+					id: id,
+					wheel: wheel,
+					speed: spd,
+					chainrings: chainrings,
+					cassette: cassette
+				}
+			});
+		},
+
 		h: 350,
 		w: 700,
 		padding: 30,
@@ -115,8 +128,8 @@ gearSpyServices.factory('GearSpy', ['d3Service', function(d3Service) {
 			var yScale = d3.scale.linear()
 				.domain([0, d3.max(data, function(d) { return d.cadence; })])
 				.range([this.h - this.padding, this.padding]);
+			
 			var color = d3.scale.category20();
-				
 			var cScale = d3.scale.linear()
 				.domain([ratioMin, ratioMax])
 				.range([0, 20]);
@@ -128,6 +141,9 @@ gearSpyServices.factory('GearSpy', ['d3Service', function(d3Service) {
 			
 			circUpdate.attr("class", "data-point")
 			.attr("opacity", 0.0)
+			.attr('ratio', function(d) {
+				return d.gear.ratio;
+			})
 			.transition()
 			.delay(function(d, i) {
 				return i * 40;
@@ -368,6 +384,9 @@ gearSpyServices.factory('GearSpy', ['d3Service', function(d3Service) {
 				.attr('stroke', function(d) {
 					return color(cScale(d.ratio));
 				})
+				.attr('ratio', function(d) {
+					return d.ratio;
+				})
 				.transition()
 				.duration(1000)
 				.attr("y2", 0)
@@ -586,6 +605,9 @@ gearSpyServices.factory('GearSpy', ['d3Service', function(d3Service) {
 					return xScale(d.distance);
 				})
 				.attr('y1', this.h)
+				.attr('ratio', function(d) {
+					return d.gear.ratio;
+				})
 				.transition()
 				.delay(function(d, i) {
 					return i * 40;

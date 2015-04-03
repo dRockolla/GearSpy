@@ -4,7 +4,9 @@ var gearSpyApp = angular.module("gearSpyApp", [
 	"gearSpyServices",
 	"gearSpyControllers",
 	"ngRoute",
-	"ui.bootstrap"
+	"ui.bootstrap",
+	"angulartics",
+	"angulartics.google.analytics"
 ]);
 
 gearSpyApp.config(['$routeProvider', 

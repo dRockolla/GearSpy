@@ -12,7 +12,7 @@
 					<li>{{activity.average_cadence}} rpm</li>
 				</ul>			
 			</div>
-			<a href="#/activities/{{activity.id}}" class="btn btn-success" ng-show="activity.average_cadence">Spy on this ride</a>
+			<a href="#/activities/{{activity.id}}" class="btn btn-success" ng-show="activity.average_cadence" analytics-on="click" analytics-event="RideSelected">Spy on this ride</a>
 			<div class="alert alert-danger" ng-hide="activity.average_cadence">No cadence data</div>
 			<div class="inner">
 				<img class="summary-map" src="//maps.googleapis.com/maps/api/staticmap?size=300x200&amp;path=weight:3%7Ccolor:red%7Cenc:{{activity.map.summary_polyline}}" alt="{{activity.name}}">

@@ -2,10 +2,10 @@
 <ol class="breadcrumb">
   <li><a href="#">Home</a></li>
   <li><a href="#/activities/">Activities</a></li>
-  <li class="active">{{activity.name}}</li>
+  <li class="active" ng-bind='activity.name'></li>
 </ol>
 	<div class="gs-section">
-		<h2 ng-cloak>{{activity.name}}</h2>
+		<h2 ng-bind='activity.name'></h2>
 		<img class="map" src="//maps.googleapis.com/maps/api/staticmap?size=640x200&amp;path=weight:3%7Ccolor:red%7Cenc:{{activity.map.summary_polyline}}" alt="{{activity.name}}" />
 	</div>
 	<div class="gs-section">
@@ -21,7 +21,7 @@
 				<label class="btn btn-info" ng-model="spd" btn-radio="11">11 Speed</label>	
 			</div>
 			<div class="btn-spy">
-				<button class="btn btn-success" ng-click="spy(activity.id)" analytics-on="click" analytics-event="Spy">Spy</button>
+				<button class="btn btn-success" ng-click="spy(activity.id)" analytics-on="click">Spy</button>
 				<button class="btn btn-danger" ng-click="spyharder(activity.id)" ng-show="false">Spy Again, but try harder this time</button>
 			</div>
 			
@@ -39,7 +39,7 @@
 						ng-model="cassette" 
 						required=""
 						ng-disabled="!manual" />
-					<input class="form-control" type="checkbox" ng-model="manual">
+					<input class="form-control" type="checkbox" ng-model="manual" analytics-on="click" analytics-event="manual">
 					<label for="manual">Set Manually</label>
 					<!-- span class="help-block error" >You can enter the cogs on your cassette, but let me try to guess first.</span -->
 					<!-- span class="help-block error" ng-show="setgears.cogs.$dirty && setgears.cogs.$error.pattern">Please enter a space separated list of the number of teeth each cog.</span -->

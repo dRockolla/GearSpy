@@ -22,13 +22,14 @@ gearSpyControllers.controller('ActivityListCtrl', ['$scope', 'ActivityList', '$l
 	}
 }]);
 
-gearSpyControllers.controller('ActivityCtrl', ['$scope', '$location', 'Activity', function($scope, $location, Activity) {
+gearSpyControllers.controller('ActivityCtrl', ['$scope', '$location', 'Activity', 'Angularytics', function($scope, $location, Activity, Angularytics) {
 	Activity.get(function(data) {
 		$scope.activityLoaded = true;
 		$scope.activity = data.activity;
 	});
 	
 	$scope.getActivity = function(id) {
+		Angularytics.trackEvent('Activity List', 'showRide');
 		$scope.id = id;
 		Activity.id = id;
 		Activity.get(function(data) {
@@ -57,7 +58,7 @@ gearSpyControllers.controller('UserCtrl', ['$scope', 'User', "$http", "$rootScop
 	}
 }]);
 
-gearSpyControllers.controller('GearCtrl', ['$scope', '$http', 'GearSpy', function($scope, $http, GearSpy) {
+gearSpyControllers.controller('GearCtrl', ['$scope', '$http', 'GearSpy', 'Angularytics', function($scope, $http, GearSpy, Angularytics) {
 	$scope.wheel = 700;
 	$scope.spd = 10;
 	$scope.options = [
@@ -73,6 +74,7 @@ gearSpyControllers.controller('GearCtrl', ['$scope', '$http', 'GearSpy', functio
 	};
 	
 	$scope.spy = function(id) {
+		Angularytics.trackEvent('Activity Page', 'spy');
 		var params = {
 				action: "spy",
 				id: id,

@@ -44,7 +44,7 @@
 				</div>
 				<div id="profile" ng-show="auth" ng-cloak>
 					<span class="neg">
-						<a ng-click="logout()">Logout of Strava</a> <span class="hidden-xs">| {{athlete.firstname}} {{athlete.lastname}}
+						<a ng-click="logout()">Logout of Strava</a> <span class="hidden-xs">| <span ng-bind='athlete.firstname'></span> <span ng-bind='athlete.lastname'></span>
 						<img ng-src="{{athlete.profile_medium}}"></span>
 					</span>
 				</div>

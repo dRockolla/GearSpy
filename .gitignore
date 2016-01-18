@@ -6,3 +6,8 @@ Secret.php
 .project
 .settings
 robots.txt
+bower_components/*
+node_modules/*
+app/bower_components/*
+.vagrant/
+.tmp/

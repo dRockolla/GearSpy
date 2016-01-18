@@ -1,0 +1,15 @@
+---
+-   name: Install Grunt.js package globally.
+    npm: name=grunt-cli global=yes
+
+-   name: Bower | Install Bower
+    npm: name=bower global=yes
+
+-   name: Install angular app dependencies.
+    command: npm install chdir={{spa_path}}
+
+-   name: Installing bower
+    command: bower install chdir={{spa_path}} global=no --allow-root
+
+-   name: Grunt build task for Angular App to dist
+    command: grunt build chdir={{spa_path}}

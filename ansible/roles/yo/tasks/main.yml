@@ -1,0 +1,11 @@
+---
+-   name: Install node.js and npm.
+    apt: name={{ item }} update_cache={{ update_apt_cache }} state=latest
+    with_items:
+        - nodejs-legacy  # Not nodejs (without -legacy) package because it links node executable wrongly to nodejs.
+        - npm
+- name: Yeoman | Install Yeoman
+  npm: name=yo global=yes
+
+- name: Yeoman | Install Angular.js generator
+  npm: name=generator-angular global=yes

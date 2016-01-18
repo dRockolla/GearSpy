@@ -1,0 +1,12 @@
+---
+
+-   name: git-core source control
+    apt: name=git-core update_cache={{ update_apt_cache }} state=latest
+
+-   name: checkout the git repo
+    sudo_user: "{{ app_code_user }}"  # needed for cloning to work and directory permissions to be ok
+    git: repo={{ git_repo_ssh }}
+        dest={{ code_path }}
+        update=yes
+        accept_hostkey=yes
+        version={{ git_repo_name }}        

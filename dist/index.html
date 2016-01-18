@@ -1,0 +1,25 @@
+<!doctype html> <html> <head> <meta charset="utf-8"> <title>GearSpy, see how you use your bike gears.</title> <meta name="Description" content="An experiment to see if cadence and speed, as collected through a bicycle computer, can be used to determine what gears a bicycle has and how often they are used during a ride."> <meta name="robots" content="nofollow"> <meta property="og:title" content="GearSpy"> <meta property="og:site_name" content="GearSpy"> <meta property="og:type" content="website"> <meta property="og:description" content="An experiment to see if cadence and speed, as collected through a bicycle computer, can be used to determine what gears a bicycle has and how often they are used during a ride."> <meta property="og:url" content="http://gearspy.cinnabargroup.com"> <meta property="og:image" content="http://gearspy.cinnabargroup.com/img/og-image.jpg"> <meta property="fb:app_id" content="1574239082792412"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <link href="http://fonts.googleapis.com/css?family=Fjord+One" rel="stylesheet" type="text/css"> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> <link rel="stylesheet" href="styles/main.05409e94.css"> </head> <body ng-app="gearSpyApp"> <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]--> <script>window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1574239082792412',
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));</script> <header class="navbar navbar-static-top navbar-inverse" role="banner" ng-controller="UserCtrl"> <div class="container"> <div id="navbar-header"> <div id="logo"> <h1>Gear Spy <small>experimental</small></h1> <noscript>I depend on JavaScript. Please enable JavaScript if you have it disabled or downland another Browser.</noscript> </div> <div id="profile" ng-show="auth" ng-cloak> <span class="neg"> <a ng-click="logout()">Logout of Strava</a> <span class="hidden-xs">| <span ng-bind="athlete.firstname"></span> <span ng-bind="athlete.lastname"></span> <img ng-src="{{athlete.profile_medium}}"></span> </span> </div> </div> </div> </header> <div class="container"> <div class="col-md-8 col-md-offset-2"> <div class="fb-like" data-share="true" data-width="450" data-show-faces="false"></div> </div> </div> <div id="main" class="container"> <div ng-view class="view-frame row"></div> </div> <script src="scripts/vendor.cbf68c94.js"></script> <script>var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-55806919-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();</script> <script src="scripts/scripts.bf64ee1d.js"></script> </body> </html>

@@ -1,0 +1,37 @@
+---
+server:
+    install: '1'
+    packages: [nodejs, npm, git ]
+    timezone: UTC
+    locale: en_US.UTF-8
+vagrant_local:
+    install: '1'
+    vm: { base_box: trusty64, hostname: default, ip: 192.168.33.99, memory: '512', sharedfolder: ./, syncType: 0 }
+nginx:
+    install: '1'
+    docroot: /vagrant/app
+    servername: localhost
+php:
+    install: '1'
+    ppa: php5-5.6
+    packages: [php5-cli, php5-intl, php5-mcrypt, php5-curl]
+# apache:
+#     install: '1'
+#     docroot: /vagrant/app
+#     servername: localhost
+
+application_name: "GearSpy"
+env: "dev"
+bootstrap: no
+update_apt_cache: no
+app_code_user: "vagrant"
+app_code_group: "vagrant"
+home_path: "/vagrant"
+code_path: "/vagrant"
+virtual_envs_home: "{{ home_path }}/app"
+virtualenv_path: "{{ virtual_envs_home }}/"
+git_repo_name: develop
+spa_path: "{{ virtual_envs_home }}"
+git_repo_ssh: "git@github.com:dRockolla/GearSpy.git"
+
+
